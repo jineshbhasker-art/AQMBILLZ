@@ -1,0 +1,192 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Item in inventory",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "sku": { "type": "string" },
+        "barcode": { "type": "string" },
+        "type": { "type": "string", "enum": ["new", "used", "repair", "accessory"] },
+        "category": { "type": "string" },
+        "brand": { "type": "string" },
+        "costPrice": { "type": "number" },
+        "sellingPrice": { "type": "number" },
+        "stockQuantity": { "type": "number" },
+        "minStockLevel": { "type": "number" },
+        "imeiRequired": { "type": "boolean" },
+        "supplierId": { "type": "string" },
+        "vatRate": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "sku", "category", "sellingPrice", "stockQuantity"]
+    },
+    "Supplier": {
+      "title": "Supplier",
+      "description": "Vendor profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "contactPerson": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "emirate": { "type": "string" },
+        "trn": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "phone"]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "Client profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "emirate": { "type": "string" },
+        "trn": { "type": "string" },
+        "totalSpent": { "type": "number" },
+        "lastPurchaseDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "phone"]
+    },
+    "Sale": {
+      "title": "Sale",
+      "description": "Invoice record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "invoiceNumber": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "vatTotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "status": { "type": "string" },
+        "cashierId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["invoiceNumber", "grandTotal", "paymentMethod", "status"]
+    },
+    "Voucher": {
+      "title": "Voucher",
+      "description": "Accounting entry (Receipt/Payment/Journal)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "voucherNumber": { "type": "string" },
+        "type": { "type": "string", "enum": ["receipt", "payment", "journal"] },
+        "date": { "type": "string", "format": "date-time" },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "createdBy": { "type": "string" }
+      },
+      "required": ["voucherNumber", "type", "date", "totalAmount"]
+    },
+    "PurchaseInvoice": {
+      "title": "Purchase Invoice",
+      "description": "Inventory purchase from supplier",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "invoiceNumber": { "type": "string" },
+        "supplierId": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "vatTotal": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "date": { "type": "string", "format": "date-time" }
+      },
+      "required": ["invoiceNumber", "supplierId", "grandTotal", "date"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Accounting entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["income", "expense"] },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "description": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "paymentMethod": { "type": "string" }
+      },
+      "required": ["type", "amount", "date"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Business expenses",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "description": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "paymentMethod": { "type": "string" },
+        "reference": { "type": "string" }
+      },
+      "required": ["category", "amount", "date"]
+    },
+    "PromoVoucher": {
+      "title": "Promo Voucher",
+      "description": "Promotional campaign voucher",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "type": { "type": "string", "enum": ["percentage", "fixed"] },
+        "value": { "type": "number" },
+        "minPurchase": { "type": "number" },
+        "expiryDate": { "type": "string", "format": "date-time" },
+        "isActive": { "type": "boolean" },
+        "usageCount": { "type": "number" },
+        "usageLimit": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code", "type", "value", "expiryDate"]
+    },
+    "BusinessProfile": {
+      "title": "Business Profile",
+      "description": "Company settings and branding",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "companyName": { "type": "string" },
+        "trn": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "logoBase64": { "type": "string" },
+        "website": { "type": "string" },
+        "termsAndConditions": { "type": "string" },
+        "footerNote": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["companyName", "trn", "email"]
+    }
+  },
+  "firestore": {
+    "products": { "schema": "Product", "description": "Inventory list" },
+    "customers": { "schema": "Customer", "description": "Customer profiles" },
+    "suppliers": { "schema": "Supplier", "description": "Vendor profiles" },
+    "sales": { "schema": "Sale", "description": "Sales history" },
+    "purchases": { "schema": "PurchaseInvoice", "description": "Purchase history" },
+    "vouchers": { "schema": "Voucher", "description": "Accounting vouchers" },
+    "promo_vouchers": { "schema": "PromoVoucher", "description": "Promotional vouchers" },
+    "transactions": { "schema": "Transaction", "description": "Accounting ledgers" },
+    "expenses": { "schema": "Expense", "description": "Business expenses" },
+    "settings": { "schema": "BusinessProfile", "description": "App settings" }
+  }
+}
